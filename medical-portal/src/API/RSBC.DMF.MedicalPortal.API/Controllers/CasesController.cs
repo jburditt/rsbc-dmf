@@ -4,13 +4,9 @@ using Rsbc.Dmf.CaseManagement.Service;
 using Rsbc.Dmf.IcbcAdapter;
 using RSBC.DMF.MedicalPortal.API.Services;
 using RSBC.DMF.MedicalPortal.API.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Threading.Tasks;
 using static Rsbc.Dmf.CaseManagement.Service.DocumentManager;
-using static Rsbc.Dmf.IcbcAdapter.IcbcAdapter;
 
 namespace RSBC.DMF.MedicalPortal.API.Controllers
 {
@@ -73,20 +69,17 @@ namespace RSBC.DMF.MedicalPortal.API.Controllers
             if (@case != null && @case.ResultStatus == Rsbc.Dmf.CaseManagement.Service.ResultStatus.Success)
             {
                 result = new PatientCase();
-
                 result.CaseId = @case.Item.CaseId;
                 result.DmerType = document.Item?.DmerType ?? string.Empty;
                 result.Status = document.Item?.Status ?? string.Empty;
                 result.Name = document.Item?.Provider?.Name ?? string.Empty;
                 result.DriverLicenseNumber = @case.Item.DriverLicenseNumber;
                 result.IdCode = @case.Item.IdCode;
-
-                result.LatestComplianceDate = @case.Item.LatestComplianceDate?.ToDateTimeOffset();
+                result.DueDate = @case.Item.LatestComplianceDate?.ToDateTimeOffset();
 
                 // get driver info from ICBC
                 if (@case.Item.DriverLicenseNumber != null)
                 {
-                    //result.DriverLicenseNumber = @case.Item.DriverLicenseNumber;
                     var request = new DriverInfoRequest();
                     request.DriverLicence = @case.Item.DriverLicenseNumber;
                     var driverInfoReply = await _icbcAdapterClient.GetDriverInfoAsync(request);
@@ -100,14 +93,11 @@ namespace RSBC.DMF.MedicalPortal.API.Controllers
                     DateTimeOffset.TryParse(driverInfoReply.BirthDate, out DateTimeOffset parsedBirthdate);
                     result.BirthDate = parsedBirthdate;
                 }
+
+                return Ok(result);
             }
 
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(result);
+            return BadRequest("Unknown state.");
         }
 
         [HttpGet("{caseId}")]
@@ -138,7 +128,7 @@ namespace RSBC.DMF.MedicalPortal.API.Controllers
                 result.LastName = c.Item.LastName;
                 result.MiddleName = c.Item.Middlename;
                 result.DriverId = c.Item.DriverId;
-                result.LatestComplianceDate = c.Item.LatestComplianceDate.ToDateTimeOffset();
+                result.DueDate = c.Item.LatestComplianceDate.ToDateTimeOffset();
             }
             // TODO handle failure
 
@@ -151,7 +141,6 @@ namespace RSBC.DMF.MedicalPortal.API.Controllers
             return Ok(result);
         }
 
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DmerCaseListItem>>> GetCases([FromQuery] CaseSearchQuery query)
         {
@@ -160,8 +149,6 @@ namespace RSBC.DMF.MedicalPortal.API.Controllers
             // second pass to populate birthdate.
 
             return Ok(cases);
-        }
-
-      
+        }     
     }
 }

@@ -197,7 +197,7 @@ namespace Rsbc.Dmf.CaseManagement.Tests.Unit
             Assert.NotNull(mappedDocument);
             Assert.Equal("Age", mappedDocument.DmerType);
             Assert.Equal("Clean Pass", mappedDocument.DmerStatus);
-            Assert.Equal(document.bcgov_CaseId.ticketnumber, mappedDocument.Case.CaseNumber);
+            Assert.Equal(document.bcgov_CaseId.ticketnumber, mappedDocument.Case.IdCode);
             Assert.Equal(document.bcgov_CaseId.customerid_contact.fullname, mappedDocument.Case.Person.FullName);
             Assert.Equal(document.bcgov_CaseId.customerid_contact.birthdate, mappedDocument.Case.Person.Birthday.Value);
         }
@@ -209,7 +209,7 @@ namespace Rsbc.Dmf.CaseManagement.Tests.Unit
             document.DmerType = "Age";
             document.DmerStatus = "Clean Pass";
             document.Case = new Dto.Case();
-            document.Case.CaseNumber = "C123";
+            document.Case.IdCode = "C123";
             document.Case.Person = new Person();
             document.Case.Person.FirstName = "Joe";
             document.Case.Person.LastName = "Smithers";
@@ -228,7 +228,7 @@ namespace Rsbc.Dmf.CaseManagement.Tests.Unit
             Assert.NotNull(mappedDocument);
             Assert.Equal(document.DmerType, mappedDocument.DmerType);
             Assert.Equal(document.DmerStatus, mappedDocument.DmerStatus);
-            Assert.Equal(document.Case.CaseNumber, mappedDocument.Case.CaseNumber);
+            Assert.Equal(document.Case.IdCode, mappedDocument.Case.CaseNumber);
             Assert.Equal(document.Case.Person.FullName, mappedDocument.Case.Person.FullName);
             Assert.Equal(document.Description, mappedDocument.Description);
             Assert.Equal(document.ComplianceDate, mappedDocument.ComplianceDate.ToDateTimeOffset());

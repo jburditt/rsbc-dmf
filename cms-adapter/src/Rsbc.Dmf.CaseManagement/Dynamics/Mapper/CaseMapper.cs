@@ -11,8 +11,7 @@ namespace Rsbc.Dmf.CaseManagement
         public CaseAutoMapperProfile()
         {
             CreateMap<incident, Dto.Case>()
-                // TODO rename
-                .ForMember(dest => dest.CaseNumber, opt => opt.MapFrom(src => src.ticketnumber))
+                .ForMember(dest => dest.IdCode, opt => opt.MapFrom(src => src.ticketnumber))
                 .ForMember(dest => dest.Person, opt => opt.MapFrom(src => src.customerid_contact))
                 .ForMember(dest => dest.LatestComplianceDate, opt => opt.MapFrom(src => src.dfp_latestcompliancedate))
                 .ForMember(dest => dest.Driver, opt => opt.MapFrom(src => src.dfp_DriverId))

@@ -8,7 +8,7 @@ namespace Rsbc.Dmf.CaseManagement.Dto
     {
         // ticketnumber 
         // TODO Rename to IDCode
-        public string CaseNumber { get; set; }
+        public string IdCode { get; set; }
 
         // dfp_latestcompliancedate
         public DateTimeOffset? LatestComplianceDate { get; set; }

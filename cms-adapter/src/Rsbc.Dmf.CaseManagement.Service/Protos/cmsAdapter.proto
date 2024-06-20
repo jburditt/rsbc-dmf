@@ -125,7 +125,6 @@ service CaseManager {
 
   // Update Non Comply documents
   rpc UpdateNonComplyDocuments(EmptyRequest) returns (ResultStatusReply);
-
 }
 
 // sync with EntityState enum in Rsbc.Dmf.CaseManagement\Dynamics\DynamicsContext.cs
@@ -135,16 +134,15 @@ enum EntityState {
     Cancelled = 2;
 }
 
-// clean, use Dynamics display name when adding new fields
 message Case {
-    string caseNumber = 1;
+    string idCode = 1;
     Person person = 2;
 }
 
-// clean, use Dynamics display name when adding new fields
 message Person {
     string fullName = 1;
-	google.protobuf.Timestamp birthday = 7;
+    string firstName = 2;
+    string lastName = 3;
 }
 
 message UpdateDriverRequest{
@@ -544,7 +542,7 @@ message GetDocumentsByTypeForUsersReply {
  message Document {
      string dmerType = 1;
      string dmerStatus = 2;
-     google.protobuf.Timestamp complianceDate = 3;
+     google.protobuf.Timestamp dueDate = 3;
      Case case = 4;
      string submittalStatus = 5;
      google.protobuf.Timestamp createdOn = 6;

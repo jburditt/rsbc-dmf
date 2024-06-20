@@ -6,10 +6,9 @@ namespace RSBC.DMF.MedicalPortal.API.ViewModels
     {
         public int DmerType { get; set; }
         public int DmerStatus { get; set; }
-        public string CaseNumber { get; set; }
+        public string IdCode { get; set; }
         public string FullName { get; set; }
         public DateTime? Birthday { get; set; }
-        public DateTime? ComplianceDate { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
         public DateTimeOffset? DueDate { get; set; }
         public string Description { get; set; }

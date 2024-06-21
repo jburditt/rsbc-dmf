@@ -10,6 +10,7 @@ namespace Rsbc.Dmf.CaseManagement.Dto
         // TODO Rename to IDCode
         public string IdCode { get; set; }
 
+        // TODO rename DueDate
         // dfp_latestcompliancedate
         public DateTimeOffset? LatestComplianceDate { get; set; }
 

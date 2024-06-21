@@ -195,7 +195,7 @@ namespace Rsbc.Dmf.CaseManagement.Tests.Unit
             var mappedDocument = _mapper.Map<Document>(document);
 
             Assert.NotNull(mappedDocument);
-            Assert.Equal("Age", mappedDocument.DmerType);
+            Assert.Equal("2 - Age", mappedDocument.DmerType);
             Assert.Equal("Clean Pass", mappedDocument.DmerStatus);
             Assert.Equal(document.bcgov_CaseId.ticketnumber, mappedDocument.Case.IdCode);
             Assert.Equal(document.bcgov_CaseId.customerid_contact.fullname, mappedDocument.Case.Person.FullName);
@@ -206,7 +206,7 @@ namespace Rsbc.Dmf.CaseManagement.Tests.Unit
         public void Map_CaseManagement_Document_To_Service_Document()
         {
             var document = new Document();
-            document.DmerType = "Age";
+            document.DmerType = "2 - Age";
             document.DmerStatus = "Clean Pass";
             document.Case = new Dto.Case();
             document.Case.IdCode = "C123";

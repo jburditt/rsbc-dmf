@@ -90,6 +90,7 @@ export class CaseDetailsComponent implements OnInit {
   allDocuments: CaseDocument[] = [];
   submissionRequirementDocuments: CaseDocument[] = [];
   driverSubmissionDocuments: CaseDocument[] = [];
+  isLoading = true;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -178,6 +179,7 @@ export class CaseDetailsComponent implements OnInit {
 
         this.submissionRequirementDocuments = submissionRequirementDocuments;
         this.driverSubmissionDocuments = driverSubmissionDocuments;
+        this.isLoading = false;
       });
   }
 
@@ -187,6 +189,7 @@ export class CaseDetailsComponent implements OnInit {
   }
 
   openPopup() {
-    this.popupService.openPopup();
+    console.log(this.caseId() as string);
+    this.popupService.openPopup(this.caseId() as string);
   }
 }

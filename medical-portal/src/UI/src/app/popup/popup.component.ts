@@ -8,6 +8,7 @@ import {
 import { PopupService } from './popup.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ChefsService } from '../shared/api/services';
+import { SubmissionStatus } from '@app/shared/api/models/submission-status';
 
 @Component({
   selector: 'app-popup',
@@ -60,7 +61,7 @@ export class PopupComponent {
 
   receiveMessage(event: {
     origin: string;
-    data: { type: string; status: string; submission: any };
+    data: { type: string; status: SubmissionStatus | undefined; submission: any };
   }): void {
     if (event.origin !== 'https://submit.digital.gov.bc.ca') return; // Ensure message is from expected origin
 
@@ -82,7 +83,7 @@ export class PopupComponent {
           return submission;
         });
     }
-    if (status === 'FINAL') {
+    if (status === SubmissionStatus.$0) {
       console.log('close popup');
       this.closePopup();
     }

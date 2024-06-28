@@ -6,7 +6,7 @@ import {
   Route,
   UrlTree,
 } from '@angular/router';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, concat, catchError, map, of, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ROUTE_DENIED } from '@app/app.routes';
 
@@ -48,8 +48,14 @@ export abstract class AuthGuard
   protected checkAccess(
     routeRedirect: string | undefined
   ): Observable<boolean | UrlTree> {
+    console.log('Checking access...');
     return this.authService.isLoggedIn().pipe(
-      map(this.handleAccessCheck(routeRedirect)),
+      tap((authenticated) => {
+        console.log('Authenticated: ', authenticated);
+        authenticated
+          ? this.handleAccessCheck(routeRedirect)
+          : of(false)
+      }),
       catchError((error) => {
         console.error('Error occurred during access validation: ', error);
         return of(this.handleAccessError());
@@ -64,7 +70,7 @@ export abstract class AuthGuard
    */
   protected abstract handleAccessCheck(
     routeRedirect: string | undefined
-  ): (authenticated: boolean) => boolean | UrlTree;
+  ): Observable<boolean | UrlTree>;
 
   /**
    * @description

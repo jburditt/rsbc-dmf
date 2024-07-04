@@ -98,23 +98,23 @@ namespace RSBC.DMF.MedicalPortal.API.Services
                 DriverLicenseNumber = query.ByDriverLicense ?? string.Empty,
             };
 
-            if (!string.IsNullOrEmpty(query.ByClinicId))
-            {
-                // check that the user is a member of the clinic.
-                var canAccess = userContext.ClinicAssignments.Where(x => x.ClinicId == query.ByClinicId).Any();
-                if (!canAccess)
-                {
-                    return Array.Empty<DmerCaseListItem>();
-                }
-                else
-                {
-                    searchRequest.ClinicId = query.ByClinicId;
-                }
-            }
-            else
-            {
-                searchRequest.ClinicId = userContext.CurrentClinicAssignment?.ClinicId;
-            }
+            //if (!string.IsNullOrEmpty(query.ByClinicId))
+            //{
+            //    // check that the user is a member of the clinic.
+            //    var canAccess = userContext.ClinicAssignments.Where(x => x.ClinicId == query.ByClinicId).Any();
+            //    if (!canAccess)
+            //    {
+            //        return Array.Empty<DmerCaseListItem>();
+            //    }
+            //    else
+            //    {
+            //        searchRequest.ClinicId = query.ByClinicId;
+            //    }
+            //}
+            //else
+            //{
+            //    searchRequest.ClinicId = userContext.CurrentClinicAssignment?.ClinicId;
+            //}
 
             searchRequest.Statuses.Add(query.ByStatus);
 

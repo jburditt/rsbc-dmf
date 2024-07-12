@@ -208,7 +208,7 @@ namespace RSBC.DMF.MedicalPortal.API.Controllers
             var loginId = profile.LoginId;
             return await AssignDmerClaim(loginId, documentId);
         }
-            
+
         [HttpPost("unclaimDmer")]
         [ProducesResponseType(typeof(DmerDocument), 200)]
         [ProducesResponseType(401)]
@@ -239,6 +239,19 @@ namespace RSBC.DMF.MedicalPortal.API.Controllers
             }
         }
 
+        [HttpPost("AssignDmer")]
+        [ProducesResponseType(typeof(DmerDocument), 200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> AssignDmer([FromQuery] string loginId, string documentId)
+        {
+            var profile = await _userService.GetCurrentUserContext();
+            // check loginId is in your network
+            //var isUserInNetwork = _userService.IsUserInNetwork(loginId);
+
+            return await AssignDmerClaim(loginId, documentId);
+        }
+
         private async Task<ActionResult> AssignDmerClaim(string loginId, string documentId)
         {
             var request = new UpdateClaimRequest
@@ -252,9 +265,9 @@ namespace RSBC.DMF.MedicalPortal.API.Controllers
             {
                 var caseDocument = _mapper.Map<DmerDocument>(reply.Item);
                 return Ok(caseDocument);
-                }
-                else
-                {
+            }
+            else
+            {
                 _logger.LogError($"{nameof(AssignDmerClaim)} error: unable to Claim/Assign DMER document - {reply.ErrorDetail}");
                 return StatusCode((int)HttpStatusCode.InternalServerError, reply.ErrorDetail);
             }

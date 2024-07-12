@@ -9,6 +9,10 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { apiDocumentAssignDmerPost$Json } from '../fn/document/api-document-assign-dmer-post-json';
+import { ApiDocumentAssignDmerPost$Json$Params } from '../fn/document/api-document-assign-dmer-post-json';
+import { apiDocumentAssignDmerPost$Plain } from '../fn/document/api-document-assign-dmer-post-plain';
+import { ApiDocumentAssignDmerPost$Plain$Params } from '../fn/document/api-document-assign-dmer-post-plain';
 import { apiDocumentClaimDmerPost$Json } from '../fn/document/api-document-claim-dmer-post-json';
 import { ApiDocumentClaimDmerPost$Json$Params } from '../fn/document/api-document-claim-dmer-post-json';
 import { apiDocumentClaimDmerPost$Plain } from '../fn/document/api-document-claim-dmer-post-plain';
